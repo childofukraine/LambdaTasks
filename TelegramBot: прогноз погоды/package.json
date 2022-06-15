@@ -2,7 +2,7 @@
   "name": "telegrambot",
   "version": "1.0.0",
   "description": "",
-  "main": "task5.js",
+  "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js"
