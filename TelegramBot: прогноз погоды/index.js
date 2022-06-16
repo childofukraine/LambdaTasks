@@ -34,10 +34,19 @@ const timeOptions = {
     })
 };
 
+const currencyOptions = {
+    reply_markup: JSON.stringify({
+        inline_keyboard:[
+            [{text:'USD',callback_data:'USD'},{text:'EUR',callback_data:'EUR'}]
+        ]
+    })
+};
+
 const start = async () => {
     bot.setMyCommands([
         {command: '/start', description: 'Начальное приветствие'},
         {command: '/weather', description: 'Узнать погоду'},
+        {command: '/currency', description: 'Узнать курс валют'},
     ])
 
     bot.on('message', async msg => {
@@ -49,7 +58,9 @@ const start = async () => {
         }
         if (text === '/weather'){
             return bot.sendMessage(chatId,'Выбори в каком городе ты хочешь посмотреть погоду: ',cityOptions)
-            
+        }
+        if (text === '/currency'){
+            return bot.sendMessage(chatId,'Курс какой валюты ты хочешь посмотреть? ',currencyOptions)
         }
         return bot.sendMessage(chatId,'Я тебя не понимаю')
     })
@@ -78,6 +89,17 @@ const start = async () => {
         })
     };
 
+    const usd = (chatId) => {
+        return axios.get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5").then((resp) => {
+            bot.sendMessage(chatId,`USD\nПокупка: ${resp.data[0].buy}\nПродажа: ${resp.data[0].sale}`)
+    })
+    }
+    const eur = (chatId) => {
+        return axios.get("https://api.privatbank.ua/p24api/pubinfo?json&exchange&coursid=5").then((resp) => {
+            bot.sendMessage(chatId,`EUR\nПокупка: ${resp.data[1].buy}\nПродажа: ${resp.data[1].sale}`)
+    })
+    }
+
     bot.on('callback_query',async msg =>{
         const data = msg.data;
         const chatId = msg.message.chat.id;
@@ -87,7 +109,13 @@ const start = async () => {
         const unixTimestamp = arrData[0].dt;
         const date = new Date(unixTimestamp * 1000);
         let currentDay = date.getDate();
-        
+
+        if (data === 'USD'){
+            usd(chatId)
+        }
+        if (data === 'EUR'){
+            eur(chatId)
+        }
         if (data === 'Kh'){
             bot.sendMessage(chatId,'С каким интервалом показать погоду: ',timeOptions);
         }
