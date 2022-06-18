@@ -1,0 +1,29 @@
+{
+  "name": "projectname",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/childofukraine/JS.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/childofukraine/JS/issues"
+  },
+  "homepage": "https://github.com/childofukraine/JS#readme",
+  "devDependencies": {
+    "nodemon": "^2.0.16"
+  },
+  "dependencies": {
+    "googleapis": "^103.0.0",
+    "inquirer": "^8.2.4",
+    "node-url-shortener": "^2.0.3"
+  }
+}
