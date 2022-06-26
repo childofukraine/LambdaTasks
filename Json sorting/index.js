@@ -16,7 +16,7 @@ async function checkStatus (url,tries = 3) {
         checkStatus(url);
     }
     if (tries === 0){
-        return response;
+        return dataArr;
     }
 }
 
